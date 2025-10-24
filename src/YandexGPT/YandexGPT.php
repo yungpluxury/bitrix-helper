@@ -6,6 +6,7 @@ use YandexGPT\Functions\ContactFunctions;
 use YandexGPT\Functions\LeadFunctions;
 use YandexGPT\Functions\DealFunctions;
 use YandexGPT\Functions\CompanyFunctions;
+use YandexGPT\Functions\TaskFunctions;
 
 class YandexGPT
 {
@@ -75,6 +76,151 @@ class YandexGPT
                 ]
             ]
         );
+
+        $this->functionHandler->register(
+            'createTaskTool',
+            [TaskFunctions::class, 'createTask'],
+            'Создает новую задачу с указанным названием, описанием и крайним сроком.',
+            [
+                'title' => [
+                    'type' => 'string',
+                    'description' => 'Название задачи'
+                ],
+                'description' => [
+                    'type' => 'string',
+                    'description' => 'Описание задачи'
+                ],
+                'deadline' => [
+                    'type' => 'string',
+                    'description' => 'Крайний срок выполнения задачи (YYYY-MM-DD, "14 ноября текущего года", "через 3 дня", "завтра" и т.д.)'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'findTaskTool',
+            [TaskFunctions::class, 'findTask'],
+            'Ищет задачу по названию.',
+            [
+                'title' => [
+                    'type' => 'string',
+                    'description' => 'Название задачи'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'updateTaskTool',
+            [TaskFunctions::class, 'updateTask'],
+            'Обновляет существующую задачу. Можно изменить название, описание, крайний срок или исполнителя.',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи для обновления'
+                ],
+                'title' => [
+                    'type' => 'string',
+                    'description' => 'Новое название задачи (опционально)'
+                ],
+                'description' => [
+                    'type' => 'string',
+                    'description' => 'Новое описание задачи (опционально)'
+                ],
+                'deadline' => [
+                    'type' => 'string',
+                    'description' => 'Новый крайний срок (опционально)'
+                ],
+                'responsibleId' => [
+                    'type' => 'string',
+                    'description' => 'ID нового исполнителя (опционально)'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'getTaskTool',
+            [TaskFunctions::class, 'getTask'],
+            'Получает детальную информацию о задаче по ID.',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'deleteTaskTool',
+            [TaskFunctions::class, 'deleteTask'],
+            'Удаляет задачу по ID.',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи для удаления'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'startTaskTool',
+            [TaskFunctions::class, 'startTask'],
+            'Переводит задачу в статус "Выполняется".',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'completeTaskTool',
+            [TaskFunctions::class, 'completeTask'],
+            'Завершает задачу.',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'deferTaskTool',
+            [TaskFunctions::class, 'deferTask'],
+            'Откладывает задачу.',
+            [
+                'taskId' => [
+                    'type' => 'string',
+                    'description' => 'ID задачи'
+                ]
+            ]
+        );
+
+        $this->functionHandler->register(
+            'getTasksListTool',
+            [TaskFunctions::class, 'getTasksList'],
+            'Получает список задач с возможностью фильтрации по статусу, исполнителю или создателю.',
+            [
+                'status' => [
+                    'type' => 'string',
+                    'description' => 'Статус задач для фильтрации (опционально)'
+                ],
+                'responsibleId' => [
+                    'type' => 'string',
+                    'description' => 'ID исполнителя для фильтрации (опционально)'
+                ],
+                'createdBy' => [
+                    'type' => 'string',
+                    'description' => 'ID создателя для фильтрации (опционально)'
+                ],
+                'limit' => [
+                    'type' => 'string',
+                    'description' => 'Максимальное количество задач (по умолчанию 10)'
+                ]
+            ]
+        );
+
     }
 
     public function callCompletion($message)

@@ -40,6 +40,11 @@ class BitrixAPI
         return $this->portalUrl . '/crm/company/details/' . $companyId . '/';
     }
 
+    public function getTaskUrl($taskId)
+    {
+        return $this->portalUrl . '/company/personal/user/1/tasks/task/view/' . $taskId . '/';
+    }
+
     public function call($method, $params = [])
     {
         $url = $this->webhookUrl . $method;

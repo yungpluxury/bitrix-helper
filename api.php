@@ -23,6 +23,7 @@ require_once 'src/YandexGPT/Functions/ContactFunctions.php';
 require_once 'src/YandexGPT/Functions/LeadFunctions.php';
 require_once 'src/YandexGPT/Functions/DealFunctions.php';
 require_once 'src/YandexGPT/Functions/CompanyFunctions.php';
+require_once 'src/YandexGPT/Functions/TaskFunctions.php';
 require_once 'src/YandexGPT/YandexGPT.php';
 
 use YandexGPT\YandexGPT;
@@ -31,6 +32,7 @@ use YandexGPT\Functions\ContactFunctions;
 use YandexGPT\Functions\LeadFunctions;
 use YandexGPT\Functions\DealFunctions;
 use YandexGPT\Functions\CompanyFunctions;
+use YandexGPT\Functions\TaskFunctions;
 
 try {
     Config::load('.env');
@@ -50,6 +52,7 @@ try {
     LeadFunctions::setBitrixAPI($bitrixWebhook);
     DealFunctions::setBitrixAPI($bitrixWebhook);
     CompanyFunctions::setBitrixAPI($bitrixWebhook);
+    TaskFunctions::setBitrixAPI($bitrixWebhook);
     
     $gpt = new YandexGPT($options);
     $query = trim($_POST['query']);
